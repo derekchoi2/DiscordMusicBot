@@ -5,6 +5,9 @@ var q = require("q");
 
 var mybot = new Discord.Client();
 var list;
+var dir = "music/";
+var playlist;
+var playlistName;
 var index;
 var playing = false;
 
@@ -45,24 +48,52 @@ mybot.on("message", function (message) {
 
 
         } else if (input == "!list") {
-            //list all files in folder
-            list();
-            var m = "```";
-            for (var i = 0; i < list.length; i++) {
-                m += i + ". " + list[i] + "\n";
+            //list all files in playlist
+            if(playlistName != null) {
+                list = fs.readdirSync(dir);
+                var m = "```";
+                for (var i = 0; i < list.length; i++) {
+                    m += i + ". " + list[i] + "\n";
+                }
+                m += "```";
+                send("Songs in `" + playlistName + "`\n" + m);
+            } else {
+                send("```Select playlist using !playlist #```")
             }
-            m += "```";
-            send(m);
+
+        } else if (contains(input, "!playlist") && input.length >= 9){
+            //
+            playlist = fs.readdirSync("music");
+
+            if (is_int(input.substr(10))){
+                //playlist selection
+                var playlistIndex = parseInt(input.substr(10), 10);
+                playlistName = playlist[playlistIndex];
+                dir = "music/" + playlistName + "/";
+                send("```Playlist " + playlistName + " selected```");
+
+
+            } else if (input.length <= 10){
+                //show playlists
+                var playlistMsg = "```";
+                for (var j = 0; j < playlist.length; j++){
+                    playlistMsg += j + ". " + playlist[j] + "\n";
+                }
+                playlistMsg += "```";
+                send("Playlists\n" + playlistMsg);
+            }
+
 
         } else if (contains(input, "!play") && input.length > 6) {
             //play command
-            index = parseInt(input.substr(6), 10);
-            if (is_int(index)) {
-                list = fs.readdirSync("music");
+            list = fs.readdirSync(dir);
+            if (is_int(input.substr(6))) {
+                index = parseInt(input.substr(6), 10);
+                playlist = fs.readdirSync(dir);
                 if (mybot.voiceConnection == null) {
-                    send("voiceConnection = null");
+                    send("```Bot not in a voice channel```");
                 } else if (index >= list.length) {
-                    send("index too big. song doesn't exist");
+                    send("```index too big. song doesn't exist```");
                 } else if (mybot.voiceConnection.playing){
                     send("```Music is playing. !stop to stop it first```");
                 } else {
@@ -99,7 +130,8 @@ mybot.on("message", function (message) {
             send("```" +
                 "!join - make bot join channel  \n" +
                 "!leave - make bot its channel \n" +
-                "!list - list songs and their index \n" +
+                "!playlist - list playlists and index, select with !playlist # \n" +
+                "!list - list songs in chosen playlist and their index \n" +
                 "!play # - plays song with # from !list. e.g. !play 1 \n" +
                 "!skip - skip current song \n" +
                 "!stop - stop music playback \n" +
@@ -124,17 +156,18 @@ mybot.on("message", function (message) {
         //get filename
         if (playing) {
             var incremented = false; //track increment from intent
-            list = fs.readdirSync("music");
+            list = fs.readdirSync(dir);
             var filename = list[i];
             mybot.setStatus("online", filename);
             send("```Now Playing: " + filename + "```");
             //play file from index
-            mybot.voiceConnection.playFile("music\/" + filename, {volume: '0.5'}).then(function () {
+            mybot.voiceConnection.playFile(dir + filename, {volume: '0.5'}).then(function () {
                 mybot.voiceConnection.playingIntent.on("end", function () {
                     if (!incremented){
                         index++;
-                        list = fs.readdirSync("music");
+                        list = fs.readdirSync(dir);
                         index = index % list.length;
+                        incremented = true;
                     }
                     play(index);
                 });

@@ -32,7 +32,8 @@ Commands
 --------
     !join - Makes bot join the author's channel
     !leave - Makes bot leave current channel
-    !list - list songs in music folder
+    !playlist - list playlists. !playlist # to select
+    !list - list songs in selected playlist
     !play # - plays song with index # from !list. e.g. !play 1
     !skip - skip current song
     !stop - stop music playback
