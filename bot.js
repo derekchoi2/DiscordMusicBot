@@ -91,11 +91,7 @@ mybot.on("message", function (message) {
             }
 
         } else if (input == "!upload") {
-            send("```" +
-                "SFTP 178.62.10.199 \n" +
-                "Username/Password: music/music \n" +
-                "upload music files into the music-files directory" +
-                "```")
+            send("```" + credentials.upload + "```")
         } else if (input == "!roll") {
 
             mybot.reply(message, "rolled " + Math.floor((Math.random() * 100) + 1));
