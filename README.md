@@ -15,13 +15,14 @@ Run `node bot.js` to start the bot.
 
 Can use `forever` to keep the bot running, and restart it if it crashes.
 
-    sudo apt-get install forever
+    npm install forever
     
 Use `forever` like this
 
     forever start bot.js //start
-    forever stop bot.js //stop
-    forever restart bot.js //restart
+    forever stop # //stop process #
+    forever stopall //stop all forever processes
+    forever list //list all forever processes, shows # to use in stop
     
 
 Requires discord.js from npm.
