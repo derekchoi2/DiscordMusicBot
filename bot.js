@@ -1,7 +1,6 @@
 var Discord = require("discord.js");
 var http = require("http");
 var fs = require("fs");
-var opus = require("node-opus");
 var q = require("q");
 
 var mybot = new Discord.Client();
