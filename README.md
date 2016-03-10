@@ -11,9 +11,20 @@ create `credentials.json` in same directory as bot.js as shown below to authenti
   
 create folder "music" in same directory as bot.js to store music files to play
 
-Run `node bot.js` to start the bot
+Run `node bot.js` to start the bot.
 
-Requires discord.js from npm
+Can use `forever` to keep the bot running, and restart it if it crashes.
+
+    sudo apt-get install forever
+    
+Use `forever` like this
+
+    forever start bot.js //start
+    forever stop bot.js //stop
+    forever restart bot.js //restart
+    
+
+Requires discord.js from npm.
 
     npm install discord.js
 
