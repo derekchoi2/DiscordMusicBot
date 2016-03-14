@@ -39,7 +39,7 @@ Commands
     !skip - skip current song
     !stop - stop music playback
     !roll - random number 1-100
-    !upload - provies details on how to upload to music folder
+    !upload - provides details on how to upload to music folder
 
 I'm using this on Ubuntu 14.04 hosted on DigitalOcean.
 

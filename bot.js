@@ -137,7 +137,9 @@ mybot.on("message", function (message) {
                 "!stop - stop music playback \n" +
                 "!roll - random 1-100 \n" +
                 "!upload - how to upload \n" +
-                "```")
+                "``` \n" +
+                "https://github.com/derekchoi2/DiscordMusicBot"
+                );
         } else {
             send("```Invalid command. !help for command list```");
 
