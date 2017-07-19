@@ -40,7 +40,3 @@ Commands
     !stop - stop music playback
     !roll - random number 1-100
     !upload - provides details on how to upload to music folder
-
-I'm using this on Ubuntu 14.04 hosted on DigitalOcean.
-
-SFTP user created with access only to the music folder, so users can upload their own music.
